@@ -1,14 +1,11 @@
 from django.db import models
 
-# Create your models here.
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
 
-# =====================================================
-# USERS
-# =====================================================
+
 class User(AbstractUser):
     ROLE_CHOICES = (
         ('client', 'Клиент'),
@@ -35,9 +32,7 @@ class User(AbstractUser):
         return f'{self.email} ({self.get_role_display()})'
 
 
-# =====================================================
-# CATALOG
-# =====================================================
+
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название')
     slug = models.SlugField(max_length=50, unique=True, verbose_name='URL-идентификатор')
@@ -106,9 +101,6 @@ class Specification(models.Model):
         return f'{self.spec_key}: {self.spec_value}'
 
 
-# =====================================================
-# BUILDS
-# =====================================================
 class Build(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
@@ -153,9 +145,7 @@ class BuildItem(models.Model):
         return f'{self.build.name} -> {self.product.name} x{self.quantity}'
 
 
-# =====================================================
-# ORDERS
-# =====================================================
+
 class Order(models.Model):
     STATUS_CHOICES = (
         ('new', 'Новый'),
