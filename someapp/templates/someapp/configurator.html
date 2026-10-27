@@ -1,0 +1,210 @@
+{% extends 'someapp/base.html' %}
+
+{% block title %}Конфигуратор ПК{% endblock %}
+
+{% block content %}
+<h2 class="fw-bold mb-4" style="font-size: 1.8rem;">Конфигуратор ПК</h2>
+
+<div class="row">
+    <!-- Левая колонка: Список компонентов -->
+    <div class="col-lg-8">
+        <div class="custom-card">
+            <div class="p-3 border-bottom bg-light rounded-top">
+                <h5 class="m-0 fw-bold">Обязательные комплектующие</h5>
+            </div>
+            
+            <!-- Процессор -->
+            <div class="component-row">
+                <div class="component-icon"><i class="bi bi-cpu"></i></div>
+                <div class="component-info">
+                    <div class="component-title">Процессор</div>
+                    <div class="component-sub">Центральный процессор</div>
+                </div>
+                <div class="component-action">
+                    <select id="select-cpu" class="form-select" style="width: 300px;">
+                        <option value="">Выберите процессор...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Материнская плата -->
+            <div class="component-row">
+                <div class="component-icon"><i class="bi bi-motherboard"></i></div>
+                <div class="component-info">
+                    <div class="component-title">Материнская плата</div>
+                    <div class="component-sub">Системная плата</div>
+                </div>
+                <div class="component-action">
+                    <select id="select-motherboard" class="form-select" style="width: 300px;">
+                        <option value="">Выберите материнскую плату...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ОЗУ -->
+            <div class="component-row">
+                <div class="component-icon"><i class="bi bi-memory"></i></div>
+                <div class="component-info">
+                    <div class="component-title">Оперативная память</div>
+                    <div class="component-sub">ОЗУ</div>
+                </div>
+                <div class="component-action">
+                    <select id="select-ram" class="form-select" style="width: 300px;">
+                        <option value="">Выберите ОЗУ...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Видеокарта -->
+            <div class="component-row">
+                <div class="component-icon"><i class="bi bi-gpu-card"></i></div>
+                <div class="component-info">
+                    <div class="component-title">Видеокарта</div>
+                    <div class="component-sub">Графический ускоритель</div>
+                </div>
+                <div class="component-action">
+                    <select id="select-gpu" class="form-select" style="width: 300px;">
+                        <option value="">Выберите видеокарту...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- БП -->
+            <div class="component-row">
+                <div class="component-icon"><i class="bi bi-plug"></i></div>
+                <div class="component-info">
+                    <div class="component-title">Блок питания</div>
+                    <div class="component-sub">Питание системы</div>
+                </div>
+                <div class="component-action">
+                    <select id="select-psu" class="form-select" style="width: 300px;">
+                        <option value="">Выберите блок питания...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Корпус -->
+            <div class="component-row">
+                <div class="component-icon"><i class="bi bi-pc-display"></i></div>
+                <div class="component-info">
+                    <div class="component-title">Корпус</div>
+                    <div class="component-sub">Шасси для комплектующих</div>
+                </div>
+                <div class="component-action">
+                    <select id="select-case" class="form-select" style="width: 300px;">
+                        <option value="">Выберите корпус...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Накопители -->
+            <div class="component-row">
+                <div class="component-icon"><i class="bi bi-hdd"></i></div>
+                <div class="component-info">
+                    <div class="component-title">Накопители</div>
+                    <div class="component-sub">SSD / HDD</div>
+                </div>
+                <div class="component-action">
+                    <select id="select-storage" class="form-select" style="width: 300px;">
+                        <option value="">Выберите накопитель...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Охлаждение -->
+            <div class="component-row">
+                <div class="component-icon"><i class="bi bi-fan"></i></div>
+                <div class="component-info">
+                    <div class="component-title">Охлаждение процессора</div>
+                    <div class="component-sub">Кулер или СЖО</div>
+                </div>
+                <div class="component-action">
+                    <select id="select-cooling" class="form-select" style="width: 300px;">
+                        <option value="">Выберите охлаждение...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Кнопка -->
+            <div class="p-4 bg-light rounded-bottom">
+                <button id="btn-check" class="btn btn-brand w-100 py-3">Проверить конфигурацию</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Правая колонка: Итог и Ошибки -->
+    <div class="col-lg-4">
+        <div class="custom-card p-4">
+            <h5 class="fw-bold mb-4">Ваша сборка</h5>
+            
+            <div id="result-box" class="alert alert-info" style="display: none;">
+                <!-- Результат проверки -->
+            </div>
+
+            <div id="total-price" class="d-flex justify-content-between mb-3 border-bottom pb-2">
+                <span class="text-muted">Итого:</span>
+                <span class="fw-bold fs-5" id="price-value">0 ₽</span>
+            </div>
+
+            <div id="total-tdp" class="d-flex justify-content-between mb-4">
+                <span class="text-muted">Потребление:</span>
+                <span class="fw-bold" id="tdp-value">0 Вт</span>
+            </div>
+
+            <button class="btn btn-outline-secondary w-100 mb-2" disabled>Сохранить сборку</button>
+            <button class="btn btn-outline-secondary w-100" disabled>Купить комплектующие</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Загрузка товаров в списки
+    async function loadProducts(categoryId, selectId) {
+        try {
+            const response = await fetch(`/api/products/?category=${categoryId}`);
+            const products = await response.json();
+            const select = document.getElementById(selectId);
+            
+            products.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.text = `${product.name} (${product.price} ₽)`;
+                select.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Ошибка загрузки:', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadProducts(1, 'select-cpu');         
+        loadProducts(2, 'select-motherboard'); 
+        loadProducts(3, 'select-ram');         
+        loadProducts(4, 'select-gpu');         
+        loadProducts(5, 'select-psu');         
+        loadProducts(6, 'select-case');        
+        loadProducts(7, 'select-storage');     
+        loadProducts(8, 'select-cooling');     
+    });
+
+    // Логика кнопки
+    document.getElementById('btn-check').addEventListener('click', () => {
+        const resultBox = document.getElementById('result-box');
+        resultBox.style.display = 'block';
+        
+        const cpu = document.getElementById('select-cpu').value;
+        const mb = document.getElementById('select-motherboard').value;
+        
+        if (!cpu || !mb) {
+            resultBox.className = 'alert alert-warning';
+            resultBox.innerHTML = 'Выберите процессор и материнскую плату.';
+            return;
+        }
+        
+        resultBox.className = 'alert alert-danger';
+        resultBox.innerHTML = '<strong>Ошибка совместимости!</strong><br>Сокет процессора не совпадает с сокетом платы.';
+    });
+</script>
+{% endblock %}

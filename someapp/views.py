@@ -2,6 +2,7 @@ from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.shortcuts import render
 
 from .models import (
     User, Category, Product, Build, BuildItem, Order, Review
@@ -113,3 +114,12 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+
+
+def index_view(request):
+    return render(request, 'someapp/index.html')
+
+def configurator_view(request):
+    return render(request, 'someapp/configurator.html')

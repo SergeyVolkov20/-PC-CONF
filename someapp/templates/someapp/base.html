@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PC Configurator{% endblock %}</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Иконки Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body { 
+            background-color: #f4f5f7; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #333;
+        }
+        /* Шапка в стиле DNS */
+        .navbar-custom {
+            background-color: #ffffff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            padding: 12px 0;
+        }
+        .navbar-brand {
+            font-weight: 800;
+            color: #e30611 !important; /* Фирменный красный */
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            margin-left: 15px;
+        }
+        .nav-link:hover { color: #e30611 !important; }
+        
+        /* Карточки */
+        .custom-card {
+            background: #fff;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        /* Кнопки */
+        .btn-brand {
+            background-color: #e30611;
+            color: white;
+            font-weight: 600;
+            border-radius: 6px;
+            padding: 10px 24px;
+            border: none;
+        }
+        .btn-brand:hover {
+            background-color: #c0050e;
+            color: white;
+        }
+        
+        /* Строки конфигуратора */
+        .component-row {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+        .component-row:last-child { border-bottom: none; }
+        .component-row:hover { background-color: #fafafa; }
+        .component-icon {
+            font-size: 1.8rem;
+            color: #888;
+            width: 50px;
+            text-align: center;
+            margin-right: 20px;
+        }
+        .component-info { flex-grow: 1; }
+        .component-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 2px; }
+        .component-sub { color: #888; font-size: 0.9rem; }
+        .component-action { margin-left: auto; }
+    </style>
+</head>
+<body>
+
+    <!-- Шапка -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="/">PC CONFIGURATOR</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/configurator/">Сборка ПК</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin/">Админ-панель</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="container mt-4 mb-5">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

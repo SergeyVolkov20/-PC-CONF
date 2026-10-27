@@ -1,0 +1,32 @@
+{% extends 'someapp/base.html' %}
+
+{% block title %}Главная - PC Configurator{% endblock %}
+
+{% block content %}
+<div class="custom-card p-5 text-center mb-4" style="background: linear-gradient(135deg, #1f1f1f 0%, #333 100%); color: white;">
+    <h1 class="display-5 fw-bold mb-3">Профессиональный подбор ПК</h1>
+    <p class="fs-5 mb-4 text-light" style="opacity: 0.8;">Автоматическая проверка совместимости процессоров, материнских плат и оперативной памяти.</p>
+    <a href="/configurator/" class="btn btn-brand btn-lg">Перейти к сборке</a>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="custom-card p-4 h-100">
+            <h4 class="fw-bold mb-3">Проверка сокета</h4>
+            <p class="text-muted mb-0">Система не позволит выбрать материнскую плату, несовместимую с выбранным процессором.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="custom-card p-4 h-100">
+            <h4 class="fw-bold mb-3">Расчет мощности</h4>
+            <p class="text-muted mb-0">Мы автоматически суммируем TDP компонентов и подскажем, хватит ли вашего блока питания.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="custom-card p-4 h-100">
+            <h4 class="fw-bold mb-3">Контроль габаритов</h4>
+            <p class="text-muted mb-0">Проверим, влезет ли видеокарта в корпус и поддерживает ли он форм-фактор платы.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
