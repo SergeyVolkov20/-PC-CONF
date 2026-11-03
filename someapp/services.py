@@ -1,12 +1,12 @@
 class CompatibilityChecker:
-    """Класс для проверки совместимости комплектующих в сборке."""
+
 
     def __init__(self, build):
         self.build = build
         self.components = self._collect_components()
 
     def _collect_components(self):
-        """Собирает характеристики всех компонентов сборки по категориям."""
+   
         components = {}
         for item in self.build.items.select_related('product__category').prefetch_related('product__specifications'):
             slug = item.product.category.slug
@@ -16,7 +16,7 @@ class CompatibilityChecker:
         return components
 
     def check_all(self):
-        """Запускает все проверки. Возвращает результат и список ошибок."""
+
         errors = []
 
         if 'cpu' in self.components and 'motherboard' in self.components:
@@ -103,7 +103,7 @@ class CompatibilityChecker:
 
 
 def recalculate_build(build):
-    """Пересчитывает итоговую цену и TDP сборки."""
+
     total_price = 0
     total_tdp = 0
 

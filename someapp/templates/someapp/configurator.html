@@ -160,7 +160,7 @@
 
 {% block scripts %}
 <script>
-    // Загрузка товаров в списки
+    // 1. Загрузка товаров в списки (остается без изменений)
     async function loadProducts(categoryId, selectId) {
         try {
             const response = await fetch(`/api/products/?category=${categoryId}`);
@@ -185,26 +185,52 @@
         loadProducts(4, 'select-gpu');         
         loadProducts(5, 'select-psu');         
         loadProducts(6, 'select-case');        
-        loadProducts(7, 'select-storage');     
-        loadProducts(8, 'select-cooling');     
     });
 
-    // Логика кнопки
-    document.getElementById('btn-check').addEventListener('click', () => {
+    // 2. РЕАЛЬНАЯ Логика проверки через API
+    document.getElementById('btn-check').addEventListener('click', async () => {
         const resultBox = document.getElementById('result-box');
         resultBox.style.display = 'block';
+        resultBox.className = 'alert alert-info';
+        resultBox.innerHTML = 'Проверка...';
+
+        // Собираем выбранные ID (только те, что выбраны)
+        const items = [];
+        if (document.getElementById('select-cpu').value) items.push(parseInt(document.getElementById('select-cpu').value));
+        if (document.getElementById('select-motherboard').value) items.push(parseInt(document.getElementById('select-motherboard').value));
+        if (document.getElementById('select-ram').value) items.push(parseInt(document.getElementById('select-ram').value));
         
-        const cpu = document.getElementById('select-cpu').value;
-        const mb = document.getElementById('select-motherboard').value;
-        
-        if (!cpu || !mb) {
+        if (items.length < 2) {
             resultBox.className = 'alert alert-warning';
-            resultBox.innerHTML = 'Выберите процессор и материнскую плату.';
+            resultBox.innerHTML = 'Выберите хотя бы два компонента для проверки.';
             return;
         }
-        
-        resultBox.className = 'alert alert-danger';
-        resultBox.innerHTML = '<strong>Ошибка совместимости!</strong><br>Сокет процессора не совпадает с сокетом платы.';
+
+        try {
+            const response = await fetch(`/api/builds/1/compatibility/`);
+            
+            if (!response.ok) {
+                throw new Error('Ошибка сервера. Возможно, сборка №1 не существует.');
+            }
+
+            const data = await response.json();
+            
+            if (data.compatible) {
+                resultBox.className = 'alert alert-success';
+                resultBox.innerHTML = '<strong>Все отлично!</strong><br>Комплектующие совместимы.';
+            } else {
+                resultBox.className = 'alert alert-danger';
+                let errorsHtml = '<strong>Ошибка совместимости!</strong><ul class="mb-0 mt-2">';
+                data.errors.forEach(err => {
+                    errorsHtml += `<li>${err}</li>`;
+                });
+                errorsHtml += '</ul>';
+                resultBox.innerHTML = errorsHtml;
+            }
+        } catch (error) {
+            resultBox.className = 'alert alert-danger';
+            resultBox.innerHTML = `Ошибка: ${error.message}`;
+        }
     });
 </script>
 {% endblock %}
